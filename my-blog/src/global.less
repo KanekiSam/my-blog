@@ -1,0 +1,78 @@
+@import './styles/theme.less';
+@import './styles/theme-config.less';
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  overflow-y: auto;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-primary);
+}
+
+.text-limit-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.text-red {
+  color: @red;
+}
+
+.text-green {
+  color: @green;
+}
+
+.text-blue {
+  color: @primary-color;
+}
+
+.text-purple {
+  color: @purple;
+}
+
+.text-cyan {
+  color: @cyan;
+}
+
+.text-orange {
+  color: @orange;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+
+  .tagItem {
+    background-color: @tag-bg;
+    color: @tag-text;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    padding: 0 8px;
+    border-radius: 8px;
+  }
+}
+
+.dynamic-delete-button {
+  position: relative;
+  top: 4px;
+  margin: 0 8px;
+  color: #999;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dynamic-delete-button:hover {
+  color: #777;
+}
+
+.dynamic-delete-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

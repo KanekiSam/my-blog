@@ -1,0 +1,193 @@
+@import '../../styles/theme.less';
+.searchBtn {
+  position: relative;
+  min-width: 40px;
+  @height: 40px;
+  height: @height;
+  // line-height: @height;
+  @icon-size: 18px;
+  .icon {
+    font-size: @icon-size;
+    color: #999;
+    position: absolute;
+    left: 0;
+    top: (@height - @icon-size)/2;
+    transition: left 0.5s;
+  }
+  .input {
+    width: 0px;
+    height: @height;
+    margin: 0;
+    padding: 0;
+    border-radius: @height;
+    transition: width 1s;
+    box-shadow: none;
+  }
+  .close {
+    position: absolute;
+    right: 15px;
+    font-size: 12px;
+    top: (@height - 12px)/2;
+    color: #666;
+  }
+  &.showSearch {
+    .icon {
+      left: 15px;
+    }
+    .input {
+      padding: 0 36px;
+      width: 250px;
+    }
+  }
+}
+.popover {
+  :global {
+    .ant-popover-inner-content {
+      width: 260px;
+      min-height: 120px;
+    }
+  }
+}
+.dataList {
+  .dataItem {
+    counter-increment: counter;
+    position: relative;
+    padding-bottom: 22px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+    .title {
+      // line-height: 36px;
+      // margin-bottom: 8px;
+    }
+    &::before {
+      content: counter(counter);
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      text-align: center;
+      line-height: 22px;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+    &:nth-child(1)::before {
+      background-color: @red;
+      color: white;
+    }
+    &:nth-child(2)::before {
+      background-color: @orange;
+      color: white;
+    }
+    &:nth-child(3)::before {
+      background-color: @yellow;
+      color: white;
+    }
+    .tagList {
+      position: absolute;
+      left: 22px;
+      bottom: 0;
+      .tagItem {
+        padding: 0 8px;
+        background-color: @tag-bg;
+        color: @tag-text;
+        margin: 4px 0;
+        margin-right: 8px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.searchDataList {
+  padding: 0 15px;
+  .dataItem {
+    counter-increment: counter;
+    position: relative;
+    padding-bottom: 32px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #efefef;
+    &::before {
+      content: counter(counter);
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      text-align: center;
+      line-height: 22px;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+    &:nth-child(1)::before {
+      background-color: @red;
+      color: white;
+    }
+    &:nth-child(2)::before {
+      background-color: @orange;
+      color: white;
+    }
+    &:nth-child(3)::before {
+      background-color: @yellow;
+      color: white;
+    }
+    .tagList {
+      position: absolute;
+      left: 22px;
+      bottom: 8px;
+      .tagItem {
+        padding: 0 8px;
+        background-color: @tag-bg;
+        color: @tag-text;
+        margin: 4px 0;
+        margin-right: 8px;
+        font-size: 12px;
+      }
+    }
+  }
+  .endList {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+  }
+}
+.historyListWrapper {
+  .title {
+    font-size: 15px;
+    line-height: 32px;
+    color: #666;
+    padding: 0 15px;
+    margin-bottom: 10px;
+    .deleteIcon {
+      float: right;
+      font-size: 15px;
+      line-height: 32px;
+    }
+  }
+  .historyList {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 15px;
+    .tagItem {
+      padding: 3px 8px;
+      background-color: @tag-bg;
+      color: @tag-text;
+      border-radius: 4px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
+:global(.bigB-dark-theme) {
+  .dataList {
+    .dataItem {
+      .searchTitle {
+        color: white;
+      }
+    }
+  }
+}

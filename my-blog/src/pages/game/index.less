@@ -1,0 +1,42 @@
+.gameWrapper {
+  .title {
+    padding: 15px;
+    margin-top: 10px;
+    background-color: var(--primary);
+    border-radius: 16px;
+    font-weight: 600;
+  }
+
+  .content {
+    padding: 15px;
+    margin-top: 10px;
+    background-color: var(--primary);
+    border-radius: 16px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .gameCard {
+      width: 32%;
+      margin-right: 2%;
+      cursor: pointer;
+
+      &:nth-child(3n+2) {
+        margin-right: 0;
+      }
+
+      .img {
+        height: 190px;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      .gameTitle {
+        line-height: 32px;
+      }
+    }
+  }
+}

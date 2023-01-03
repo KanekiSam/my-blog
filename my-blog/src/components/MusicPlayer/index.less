@@ -1,0 +1,199 @@
+.songingWraper {
+
+
+  .songInfo {
+    display: flex;
+    position: relative;
+    top: 5px;
+
+    .poster {
+      width: 40px;
+      height: 40px;
+      margin-right: 8px;
+
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .textInfo {
+      width: calc(100% - 48px);
+
+      .songName {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .lyrics {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+
+        .word {
+          white-space: nowrap;
+          font-size: 12px;
+          // color: #999;
+          height: 20px;
+          line-height: 1.5;
+          display: inline-block;
+          background-image: linear-gradient(to right, #df5000 0%, #df5000 50%, #999 50%, #999 100%);
+          background-size: 200%;
+          -webkit-background-clip: text;
+          color: transparent;
+          background-position: 100% center;
+          animation: textColorMove 1s linear;
+          animation-fill-mode: forwards;
+          position: relative;
+          left: 0px;
+        }
+
+        .animate {
+          // animation: textColorMove var(--time0) linear 0s, textMove var(--time) linear var(--delay);
+          animation-name: textColorMove, textMove;
+          animation-duration: var(--time0), var(--time) !important;
+          animation-timing-function: linear;
+          animation-delay: 0s, var(--delay);
+          animation-fill-mode: forwards;
+          // animation: textColorMove 1s linear;
+          // animation-fill-mode: forwards;
+        }
+
+        @keyframes textColorMove {
+          to {
+            background-position: 0% center;
+          }
+        }
+
+        @keyframes textMove {
+          to {
+            left: var(--offset);
+          }
+        }
+
+        :global {
+          .paused {
+            animation-play-state: paused;
+          }
+
+          .running {
+            animation-play-state: running;
+          }
+
+
+        }
+      }
+    }
+
+  }
+
+  .tool {
+    display: flex;
+    justify-content: space-between;
+
+    .toolIcon {
+      font-size: 20px;
+      line-height: 36px;
+      font-weight: 800;
+      position: relative;
+    }
+
+    .singleCircle {
+      &::before {
+        content: '1';
+        display: inline-block;
+        position: absolute;
+        left: calc(50% - 4px);
+        // font-weight: normal;
+        font-size: 12px;
+        top: -3px;
+        transform: scale(0.6);
+      }
+    }
+
+    .voiceIcon {
+      font-size: 18px;
+      position: relative;
+
+      &:hover {
+        .volumeWrapper {
+          display: block;
+        }
+      }
+
+      .volumeWrapper {
+        display: none;
+        width: 60px;
+        background-color: var(--primary);
+        position: absolute;
+        top: -10px;
+        left: calc(50% - 5px);
+        transform: rotate(-90deg);
+        transform-origin: left center;
+        padding-right: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+
+        :global {
+
+          .ant-progress-inner {
+            overflow: unset !important;
+          }
+
+          .ant-progress-bg {
+            height: 3px !important;
+            position: relative;
+
+            &::before {
+              content: '';
+              display: block;
+              width: 5px;
+              height: 5px;
+              border-radius: 100%;
+              border: 1px solid #999;
+              background-color: white;
+              position: absolute;
+              right: -3.5px;
+              top: -1px;
+              pointer-events: all;
+            }
+          }
+        }
+      }
+    }
+
+    .unvoice {
+      position: relative;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 2px;
+        height: 80%;
+        transform: rotate(-45deg);
+        background-color: var(--text);
+        position: absolute;
+        left: 50%;
+        top: 0;
+      }
+    }
+
+    .playBtn {
+      font-size: 30px;
+    }
+  }
+
+  .timer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    position: relative;
+    color: #999;
+  }
+
+  .author {
+    font-size: 12px;
+    color: #999;
+  }
+}

@@ -1,0 +1,121 @@
+@import '../../styles/theme.less';
+
+.guideWrapper {
+  position: fixed;
+  left: calc((50vw - 460px - 200px) / 2);
+  bottom: 50px;
+  width: 200px;
+  height: 242px;
+  border-radius: 100%;
+  overflow: hidden;
+  background-color: white;
+  img {
+    width: 200px;
+  }
+  .eyes {
+    position: absolute;
+    top: 96px;
+    left: 65px;
+    display: flex;
+    justify-content: space-between;
+    width: 64px;
+    .eye {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      border-radius: 100%;
+      background-color: #000;
+      &.right {
+        position: relative;
+        top: -3.2px;
+      }
+    }
+  }
+  .smile {
+    height: 25px;
+    width: 50px;
+    border-radius: 0 0 50px 50px;
+    background: #770f1a;
+    margin: 0 auto;
+    overflow: hidden;
+    transition: all 0.4s;
+    transform-origin: center;
+    position: absolute;
+    top: 123px;
+    left: 80px;
+    transform: scale(0.8) rotate(-5deg);
+
+    animation: shake 2s ease-in-out infinite;
+    .teeth {
+      background-color: #fff;
+      transition: all 0.4s;
+      height: 8.33333px;
+      width: 8.33333px;
+      margin-left: 14px;
+      position: relative;
+      &::after {
+        content: '';
+        background-color: #fff;
+        height: 8.33333px;
+        width: 8.33333px;
+        position: absolute;
+        left: 12.5px;
+        top: 0;
+        z-index: 10000;
+      }
+    }
+    .tongue {
+      transition: all 0.4s;
+      height: 25px;
+      width: 25px;
+      background-color: pink;
+      border-radius: 100%;
+      margin-top: 10px;
+      margin-left: 4px;
+      display: inline-block;
+      position: relative;
+      &:after {
+        content: '';
+        height: 25px;
+        width: 25px;
+        background-color: pink;
+        border-radius: 100%;
+        display: inline-block;
+        position: absolute;
+        left: 12.5px;
+      }
+    }
+  }
+}
+@media screen and( max-width:630px) {
+  .guideWrapper {
+    display: none;
+  }
+}
+
+@keyframes shake {
+  0%,
+  50% {
+    transform: scale(0.8) rotate(-5deg);
+  }
+  /* 垂直抖动，核心代码 */
+  50%,
+  75% {
+    transform: translate3d(0, -1px, 0) scale(0.8) rotate(-5deg);
+  }
+  55%,
+  80% {
+    transform: translate3d(0, +1.5px, 0) scale(0.8) rotate(-5deg);
+  }
+  60%,
+  85% {
+    transform: translate3d(0, -3px, 0) scale(0.8) rotate(-5deg);
+  }
+  65%,
+  90% {
+    transform: translate3d(0, +3px, 0) scale(0.8) rotate(-5deg);
+  }
+  70% {
+    transform: translate3d(0, -3px, 0) scale(0.8) rotate(-5deg);
+  }
+}

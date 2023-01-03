@@ -1,0 +1,127 @@
+@import '../../styles/theme.less';
+.cardWrapper {
+  background-color: var(--primary);
+}
+.noticeWrapper {
+  .more {
+    margin: 20px auto;
+    max-width: 250px;
+    height: 44px;
+    line-height: 44px;
+    width: 100%;
+    text-align: center;
+    color: @tag-text;
+    border: 1px solid @tag-text;
+    border-radius: 16px;
+  }
+  .footer {
+    color: @tag-text;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+.noticeItem {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  .content {
+    display: inline-block;
+    background-color: var(--tag-bg);
+    line-height: 28px;
+    padding: 8px;
+    max-width: 600px;
+    width: 100%;
+    border-radius: 8px;
+    .time {
+      font-size: 12px;
+      color: #999;
+    }
+  }
+  .info {
+    display: inline-block;
+    position: relative;
+    margin-left: 15px;
+    margin-right: 8px;
+    img {
+      width: 32px;
+      height: 32px;
+    }
+    .thumbUp,
+    .comment {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: -20px;
+      padding: 1px 4px;
+      background-color: @red;
+      color: white;
+      transform: scale(0.8);
+      font-size: 12px;
+      border-radius: 30px;
+    }
+  }
+  &.read {
+    .content {
+      position: relative;
+      overflow: hidden;
+      &::before {
+        content: '已阅';
+        color: white;
+        display: block;
+        width: 100px;
+        height: 46px;
+        text-align: center;
+        line-height: 70px;
+        background-color: #999;
+        position: absolute;
+        right: -36px;
+        top: -16px;
+        transform: rotate(45deg);
+        opacity: 0.6;
+        font-size: 12px;
+      }
+    }
+    .thumbUp,
+    .comment {
+      background-color: @orange;
+    }
+  }
+}
+.goBack {
+  float: right;
+  font-size: 28px;
+}
+
+@media screen and(max-width:630px) {
+  .noticeItem {
+    display: block !important;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 8px;
+    .content {
+      margin-bottom: 8px;
+    }
+  }
+}
+:global(.bigB-dark-theme) {
+  .cardWrapper {
+    .title {
+      color: white !important;
+    }
+  }
+  .noticeItem {
+    .content {
+      color: white;
+    }
+    .info {
+      background-color: #fff;
+      border-radius: 100%;
+      padding: 3px;
+    }
+  }
+  :global {
+    .ant-tabs-tab {
+      color: white;
+    }
+  }
+}

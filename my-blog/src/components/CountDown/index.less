@@ -1,0 +1,71 @@
+@import '../../styles/theme.less';
+.circleWrapper {
+  position: relative;
+  width: 47px;
+  height: 48px;
+  background: var(--tag-bg);
+  border-radius: 50%;
+  .wrapper {
+    width: 24px;
+    height: 48px;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    @borderWidth: 2px;
+    .circle {
+      width: 48px;
+      height: 48px;
+      border: @borderWidth solid transparent;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      transform: rotate(-135deg);
+    }
+    .rightcircle {
+      border-top: @borderWidth solid #1390eb;
+      border-right: @borderWidth solid #1390eb;
+      right: 0px;
+      animation-duration: 32s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+    &.right {
+      right: 0;
+    }
+    &.left {
+      left: 0;
+      .leftcircle {
+        border-bottom: @borderWidth solid #1390eb;
+        border-left: @borderWidth solid #1390eb;
+        left: 0px;
+        // animation: circle_left 15s linear infinite;
+        animation-duration: 32s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+    }
+  }
+  .number {
+    font-size: 12px;
+    line-height: 48px;
+  }
+}
+
+@keyframes circle_right {
+  0% {
+    -webkit-transform: rotate(-135deg);
+  }
+  50%,
+  100% {
+    -webkit-transform: rotate(45deg);
+  }
+}
+@keyframes circle_left {
+  0%,
+  50% {
+    -webkit-transform: rotate(-135deg);
+  }
+  100% {
+    -webkit-transform: rotate(45deg);
+  }
+}

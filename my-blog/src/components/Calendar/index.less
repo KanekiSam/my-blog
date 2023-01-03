@@ -1,0 +1,42 @@
+@import '../../styles/theme.less';
+.calenderWrapper {
+  background: var(--primary);
+  padding: 10px 15px;
+  border-radius: 8px;
+  .curDay {
+    text-align: center;
+    line-height: 36px;
+    font-size: 15px;
+  }
+
+  .calenderBody {
+    .header {
+      display: flex;
+      .timeName {
+        width: 14%;
+        margin-bottom: 10px;
+        text-align: center;
+        color: @green;
+        font-weight: bold;
+      }
+    }
+    .dayList {
+      display: flex;
+      flex-wrap: wrap;
+      .dayItem {
+        width: 14%;
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+        &.noCur {
+          color: #999;
+        }
+        &.active {
+          border-radius: 100%;
+          background-color: @green;
+          color: white;
+        }
+      }
+    }
+  }
+}

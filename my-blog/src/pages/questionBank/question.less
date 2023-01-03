@@ -1,0 +1,128 @@
+@import '../../styles/theme.less';
+.questionWrapper {
+  .cardWrapper {
+    margin-top: 20px;
+    background-color: var(--primary);
+    border-radius: 16px;
+    padding: 30px;
+
+    .dataList {
+      display: flex;
+      flex-wrap: wrap;
+      .dataItem {
+        width: 30%;
+        margin: 3px;
+        .flexWrapper {
+          display: flex;
+        }
+        border: 1px solid #efefef;
+        padding: 10px;
+        border-radius: 8px;
+        .poster {
+          width: 75px;
+          height: 50px;
+          margin-right: 8px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .title {
+          font-size: 16px;
+          line-height: 32px;
+        }
+        .count {
+          font-size: 13px;
+          margin-bottom: 15px;
+          .num {
+            font-size: 16px;
+            color: @red;
+          }
+        }
+      }
+    }
+  }
+  .statics {
+    padding: 15px;
+    margin-top: 10px;
+    .staticItem {
+      margin-right: 16px;
+    }
+  }
+}
+.questionContent {
+  position: relative;
+  .questionCheckBtn {
+    color: #999;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    z-index: 11;
+    font-size: 18px;
+    &.questionActive {
+      color: @red;
+      font-weight: 1000;
+    }
+  }
+  :global {
+    .ant-form-item-control-input-content {
+      position: relative;
+    }
+  }
+  .deleteBtn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 16px;
+  }
+}
+
+.addSelect {
+  min-height: 80px;
+  padding: 8px;
+  padding-right: 30px;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  .selectWrapper {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .editIcon {
+    position: absolute;
+    right: 34px;
+    top: 12px;
+    padding: 3px;
+    border-radius: 100%;
+    opacity: 0.5;
+    &:hover {
+      background-color: white;
+      opacity: 0.8;
+    }
+  }
+}
+
+@media screen and(max-width:630px) {
+  .questionWrapper {
+    .cardWrapper {
+      padding: 15px;
+      .dataList {
+        .dataItem {
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}
+:global(.bigB-dark-theme) {
+  .addSelect {
+    .selectWrapper {
+      color: white;
+    }
+    .editIcon {
+      color: white;
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
+}

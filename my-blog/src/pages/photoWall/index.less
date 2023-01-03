@@ -1,0 +1,41 @@
+.wrapper {
+  position: relative;
+  .title {
+    font-size: 28px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin-top: 30px;
+    user-select: none;
+    //   background: linear-gradient(
+    //     to right,
+    //     red,
+    //     orange,
+    //     yellow,
+    //     green,
+    //     yellow,
+    //     orange,
+    //     red,
+    //     orange,
+    //     yellow,
+    //     green,
+    //     yellow,
+    //     orange,
+    //     red
+    //   );
+    // }
+    animation: move 5s infinite;
+    color: #f47983;
+  }
+}
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    /*宽度固定，如果为百分比背景不会滚动*/
+    background-position: -300px 0;
+  }
+}
