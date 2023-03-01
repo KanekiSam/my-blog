@@ -10,6 +10,7 @@ import { useModel, useLocation } from 'umi';
 import { ConfigProvider } from 'antd';
 import { TokenUtils } from '@/utils/token';
 import Canvas from './components/canvas';
+import { initTheme } from './utils';
 
 interface Props { }
 const Index: React.FC<Props> = (props) => {
@@ -80,6 +81,9 @@ const Index: React.FC<Props> = (props) => {
     </div>
   );
   const theme = TokenUtils.getTheme();
+  useEffect(() => {
+    initTheme();
+  }, [])
   useEffect(() => {
     document.body.setAttribute('class', `bigB-${theme || 'custom'}-theme`);
   }, [theme]);
