@@ -62,4 +62,5 @@ export default defineConfig({
     },
   },
   publicPath: '/',
+  outputPath:'../docs'
 });
