@@ -22,10 +22,10 @@ export class Article {
   })
   title: string | null;
 
-  @Column('varchar', {
-    name: 'content',
+  @Column("varchar", {
+    name: "content",
     nullable: true,
-    comment: '文章内容',
+    comment: "文章内容",
     length: 13000,
   })
   content: string | null;

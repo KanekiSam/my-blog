@@ -8,8 +8,8 @@ import {
 } from "typeorm";
 import { Article } from "./Article";
 
-@Index("comment_FK", ["userId"], {})
 @Index("comment_FK_1", ["articleId"], {})
+@Index("comment_FK", ["userId"], {})
 @Entity("comment", { schema: "blog" })
 export class Comment {
   @Column("varchar", {

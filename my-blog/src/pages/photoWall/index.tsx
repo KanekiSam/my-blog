@@ -3,7 +3,7 @@ import ElasticRope, {
   IElasticRopeContent,
   ImgContentItem,
 } from '@/components/ElasticRope/rope';
-import { message, Modal } from 'antd';
+import { Modal } from 'antd';
 import { useEffect } from 'react';
 import styles from './index.less';
 
@@ -124,11 +124,11 @@ const PhotoWall: React.FC<Props> = (props) => {
     const elasticRope = new ElasticRope('canvas', {
       text: {
         size: 32,
-        color: 'blue',
+        color: 'yellow',
         lineWidth: 1,
       },
       rope: {
-        color: 'black',
+        color: 'white',
         size: 2,
         distance: 1520,
         downRope: 100,
@@ -146,7 +146,7 @@ const PhotoWall: React.FC<Props> = (props) => {
     };
   }, []);
   return (
-    <div className={styles.wrapper} style={{ width }}>
+    <div className={styles.wrapper}>
       <div className={styles.title}>照片墙</div>
       <canvas id="canvas" width={width} height={height}></canvas>
       <Modal

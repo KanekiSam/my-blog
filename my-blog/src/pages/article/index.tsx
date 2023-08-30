@@ -57,6 +57,13 @@ const Article: React.FC<Props> = (props) => {
         ({ success, data }) => {
           if (success) {
             setDetail(data);
+            const eles = document.getElementsByTagName('table');
+            if (eles.length) {
+              [...eles].forEach((dom) => {
+                dom.border = '1';
+                dom.width = 'auto';
+              });
+            }
           }
         },
       );

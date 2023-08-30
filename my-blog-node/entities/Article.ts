@@ -22,14 +22,6 @@ export class Article {
   })
   title: string | null;
 
-  @Column("varchar", {
-    name: "content",
-    nullable: true,
-    comment: "文章内容",
-    length: 5000,
-  })
-  content: string | null;
-
   @Column("datetime", {
     name: "publish_time",
     nullable: true,
@@ -83,6 +75,14 @@ export class Article {
     default: () => "'1'",
   })
   state: number;
+
+  @Column("varchar", {
+    name: "content",
+    nullable: true,
+    comment: "文章内容",
+    length: 13000,
+  })
+  content: string | null;
 
   @ManyToOne(() => ArticleType, (articleType) => articleType.articles, {
     onDelete: "NO ACTION",

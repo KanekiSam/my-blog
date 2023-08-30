@@ -25,7 +25,7 @@ import CheckSkinDrawer from './components/checkSkin';
 import HeadGuide from '@/components/HeadGuide';
 import Game from '../game';
 
-interface Props { }
+interface Props {}
 const HomePage: React.FC<Props> = (props) => {
   const { isLogin, onRefresh } = useModel('global', (model) => ({
     isLogin: model.isLogin,
@@ -179,7 +179,7 @@ const HomePage: React.FC<Props> = (props) => {
                 // }
               }}
             >
-              {!TokenUtils.getTheme() ? (
+              {!TokenUtils.getTheme() || TokenUtils.getTheme() === 'custom' ? (
                 <img
                   src={require('../../static/img/night.png')}
                   onClick={() => {
@@ -261,9 +261,18 @@ const HomePage: React.FC<Props> = (props) => {
         onClose={() => setShowSkin(false)}
         onRefresh={onRefresh}
       />
-      {scroll.top > 20 ? <div className={styles.backTop} onClick={() => {
-        document.body.scrollTo({ top: 0 });
-      }}><CaretUpOutlined className={styles.icon} /></div> : ''}
+      {scroll.top > 20 ? (
+        <div
+          className={styles.backTop}
+          onClick={() => {
+            document.body.scrollTo({ top: 0 });
+          }}
+        >
+          <CaretUpOutlined className={styles.icon} />
+        </div>
+      ) : (
+        ''
+      )}
       {/* <HeadGuide /> */}
     </div>
   );

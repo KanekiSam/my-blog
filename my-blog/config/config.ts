@@ -2,7 +2,7 @@ import { defineConfig } from 'umi';
 import themeConfig from './theme.config';
 
 // const target = 'http://10.128.9.69:3000';
-const target = 'http://10.128.10.57:3000';
+const target = 'http://localhost:3000';
 // const target = 'http://192.168.0.9:3000'
 
 export default defineConfig({
