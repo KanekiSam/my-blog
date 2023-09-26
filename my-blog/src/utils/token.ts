@@ -17,7 +17,7 @@ const setToken = (obj: {
   const { token, userInfo, bigBtheme: theme } = obj;
   /** 失效时间30分钟 */
   const millisecond = new Date().getTime();
-  const expires = new Date(millisecond + 60 * 1000 * 30);
+  const expires = new Date(millisecond + 60 * 1000 * 12 * 60);
   if (token) {
     Cookies.set(bigBTkey, token, { expires });
   }

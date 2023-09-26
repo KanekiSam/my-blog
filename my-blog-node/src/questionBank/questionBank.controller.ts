@@ -62,6 +62,20 @@ export class QuestionBankController {
     return { message: '成功' };
   }
 
+  @UseGuards(AuthGuard('jwt'))
+  @Post('updateQuestion')
+  async updateQuestion(@Req() req) {
+    await this.bankService.updateQuestion(req.body);
+    return { message: '成功' };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('deleteQuestion')
+  async deleteQuestion(@Req() req) {
+    await this.bankService.deleteQuestion(req.query.id);
+    return { message: '成功' };
+  }
+
   @Post('addComment')
   async addComment(@Req() req) {
     const clientIp = getClientIp(req);
@@ -79,5 +93,12 @@ export class QuestionBankController {
     body.clientIp = clientIp;
     await this.bankService.addCategory(body);
     return { message: '成功' };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('deleteCategory')
+  async deleteCategory(@Req() req) {
+    await this.bankService.deleteCategory(req.query.id);
+    return { message: '删除成功' };
   }
 }

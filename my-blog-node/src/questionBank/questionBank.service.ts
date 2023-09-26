@@ -20,7 +20,7 @@ export class QuestionBankService {
     private readonly recordResponsity: Repository<QuestionRecordEntity>,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-  ) {}
+  ) { }
 
   /**获取某类别全部题目 */
   async queryBankList(categoryId) {
@@ -55,12 +55,20 @@ export class QuestionBankService {
     return await this.bankReponsitory.save(data);
   }
 
+  /**修改题目 */
+  async updateQuestion(data: QuestionBankEntity) {
+    return await this.bankReponsitory.update(data.questionId, {
+      questionContent: data.questionContent,
+      answerKeys: data.answerKeys,
+      answerOptions: data.answerOptions,
+      questionType: data.questionType,
+      correctAnswer: data.correctAnswer,
+    });
+  }
+
   /**删除题目 */
   async deleteQuestion(id) {
-    return await this.bankReponsitory.save({
-      questionId: id,
-      state: '3',
-    });
+    return await this.bankReponsitory.update(id, { state: '3' });
   }
 
   /**新增题目类别 */
@@ -69,6 +77,11 @@ export class QuestionBankService {
     data.createTime = new Date();
     data.state = '1';
     return await this.categReponsitory.save(data);
+  }
+
+  /**删除题目类别 */
+  async deleteCategory(id) {
+    return await this.categReponsitory.update(id, { state: '3' });
   }
 
   /**新增题目评论 */
@@ -106,4 +119,5 @@ export class QuestionBankService {
       return await this.recordResponsity.save({ ...data, frequency: 1 });
     }
   }
+
 }

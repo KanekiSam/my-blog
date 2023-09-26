@@ -7,7 +7,7 @@ import {
 import _ from 'lodash';
 import { Modal, Form, Input, Button, Select, message, Tooltip } from 'antd';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../question.less';
 import AddSelect from './addSelect';
 
@@ -16,25 +16,27 @@ interface Props {
   onClose: () => void;
   reload: () => void;
   categoryId?: number;
+  initData?: any;
 }
 const AddQuestionModal: React.FC<Props> = (props) => {
-  const { visible, onClose, reload, categoryId } = props;
+  const { visible, onClose, reload, categoryId, initData } = props;
   const [form] = Form.useForm();
 
   const [answer, setAnswer] = useState<number[]>([]);
   const onOk = () => {
     form.validateFields().then((values) => {
       if (categoryId) {
-        httpPost('/auth/questionBank/addQuestion', {
+        httpPost(`/auth/questionBank/${initData.questionId ? 'updateQuestion' : 'addQuestion'}`, {
           ...values,
           categoryId,
           answerOptions: values.answerOptions
             ? values.answerOptions
-                .map((item) => item.replace(/\/\//g, ''))
-                .join('//')
+              .map((item) => item.replace(/\/\//g, ''))
+              .join('//')
             : '',
           correctAnswer:
             values.questionType === 3 ? values.correctAnswer : answer.join(','),
+          questionId: initData.questionId,
         }).then(({ success, data }) => {
           if (success) {
             onClose();
@@ -48,14 +50,28 @@ const AddQuestionModal: React.FC<Props> = (props) => {
       }
     });
   };
+  useEffect(() => {
+    if (initData && Object.keys(initData).length > 0 && visible) {
+      form.setFieldsValue({
+        ...initData,
+        answerOptions: initData.answerOptions.split('//'),
+        correctAnswer: initData.questionType === 3 ? initData.correctAnswer : initData.correctAnswer.split(',')
+      })
+      setAnswer(initData.correctAnswer?.split(',').map(item => parseInt(item)));
+    }
+  }, [initData, visible])
   return (
     <Modal
-      title="添加题目"
+      title={initData?.questionId ? "修改题目" : "添加题目"}
       visible={visible}
       onCancel={onClose}
       onOk={onOk}
       okText="确定"
       cancelText="取消"
+      bodyStyle={{ maxHeight: 600, overflowY: 'auto' }}
+      afterClose={() => {
+        form.resetFields();
+      }}
     >
       <Form form={form} wrapperCol={{ span: 20 }} labelCol={{ span: 4 }}>
         <Form.Item

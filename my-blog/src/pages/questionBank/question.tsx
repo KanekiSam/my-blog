@@ -1,6 +1,6 @@
-import { httpGet } from '@/utils/request';
-import { PlusOutlined } from '@ant-design/icons';
-import { Empty, Button, Space } from 'antd';
+import { httpGet, httpPost } from '@/utils/request';
+import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Empty, Button, Space, message, Modal } from 'antd';
 import classNames from 'classnames';
 import React from 'react';
 import { history, useModel } from 'umi';
@@ -9,12 +9,14 @@ import { useState } from 'react';
 import AddBankModal from './Components/addBankModal';
 import AddQuestionModal from './Components/addQuestionModal';
 import styles from './question.less';
+import UpdateQuestionModal from './Components/updateQuestionModal';
 
 interface Props {}
 const Question: React.FC<Props> = (props) => {
   const [dataList, setDataList] = useState<any[]>([]);
   const [visible, setVisible] = useState(false);
   const [showAddQr, setShowAddQr] = useState(false);
+  const [showUpdateQr, setShowUpdateQr] = useState(false);
   const [current, setCurrent] = useState<number>();
   const { isLogin } = useModel('global', (model) => ({
     isLogin: model.isLogin,
@@ -24,6 +26,22 @@ const Question: React.FC<Props> = (props) => {
       if (success && typeof data === 'object') {
         setDataList(data);
       }
+    });
+  };
+  const onDelete = (id) => {
+    Modal.confirm({
+      title: '是否删除当前题库？',
+      onOk: () => {
+        if (!id) return;
+        httpPost(`/auth/questionBank/deleteCategory?id=${id}`).then(
+          ({ success, message: msg }) => {
+            if (success) {
+              message.info(msg);
+              queryList();
+            }
+          },
+        );
+      },
     });
   };
   useEffect(() => {
@@ -82,11 +100,11 @@ const Question: React.FC<Props> = (props) => {
                   {isLogin ? (
                     <Button
                       onClick={() => {
-                        setShowAddQr(true);
+                        setShowUpdateQr(true);
                         setCurrent(item.categoryId);
                       }}
                     >
-                      添加题目
+                      {item.questionBanks.length < 1 ? '添加' : '修改'}题库
                     </Button>
                   ) : (
                     ''
@@ -100,6 +118,16 @@ const Question: React.FC<Props> = (props) => {
                   答题准确率：
                   <span className="text-red"> {item.averageRate}</span>
                 </div>
+                {isLogin ? (
+                  <div
+                    className={styles.deleteBtn}
+                    onClick={() => onDelete(item.categoryId)}
+                  >
+                    <DeleteOutlined />
+                  </div>
+                ) : (
+                  ''
+                )}
               </div>
             ))
           ) : (
@@ -134,6 +162,14 @@ const Question: React.FC<Props> = (props) => {
         visible={showAddQr}
         categoryId={current}
         onClose={() => setShowAddQr(false)}
+        reload={() => {
+          queryList();
+        }}
+      />
+      <UpdateQuestionModal
+        visible={showUpdateQr}
+        categoryId={current}
+        onClose={() => setShowUpdateQr(false)}
         reload={() => {
           queryList();
         }}
