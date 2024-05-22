@@ -82,7 +82,7 @@ const UpdateQuestionModal: React.FC<Props> = (props) => {
           </div>
           {questionList.map((item, index) => {
             return (
-              <div className={styles.questionListItem}>
+              <div key={index} className={styles.questionListItem}>
                 <div className={styles.text}>
                   <span className={styles.no}>{index + 1}、</span>
                   <Popover

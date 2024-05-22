@@ -111,7 +111,7 @@ const AddQuestionModal: React.FC<Props> = (props) => {
                   {(fields, { add, remove }, { errors }) => (
                     <>
                       {fields.map((field, index) => (
-                        <div className={styles.questionContent}>
+                        <div key={index} className={styles.questionContent}>
                           <Form.Item
                             {...(index === 0
                               ? {}

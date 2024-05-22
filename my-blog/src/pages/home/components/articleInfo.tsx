@@ -8,12 +8,13 @@ import {
   HeartFilled,
   HeartOutlined,
   MessageOutlined,
-  PlusOutlined,
 } from '@ant-design/icons';
 import { httpGet } from '@/utils/request';
 import styles from '../index.less';
-import { message, Modal, Button } from 'antd';
+import { message, Modal, Button, Spin } from 'antd';
 import { useScroll } from '@umijs/hooks';
+import LazyImg from '@/components/LazyImg';
+import Walking from '@/components/Loading/walking';
 
 const colorTags = [
   '#FFC0CB',
@@ -33,9 +34,12 @@ const ArticleInfo: React.FC<Props> = (props) => {
   const [articleList, setArticleList] = useState<any[]>([]);
   const [tagList, setTagList] = useState([]);
   const [width, setWidth] = useState(window.innerWidth);
+  const [loading, setLoading] = useState(false);
+
   const queryArticleList = (_page = 1, _active = active) => {
+    setLoading(true);
     httpGet('/article/getListByPage', {
-      size: 10,
+      size: 5,
       page: _page,
       articleTypeId: _active === -1 ? undefined : _active,
     }).then(({ success, data: { list, total: _total } }) => {
@@ -47,7 +51,7 @@ const ArticleInfo: React.FC<Props> = (props) => {
           _page == 1 ? list : [].concat(_.cloneDeep(articleList), list);
         setArticleList(_articleList);
       }
-    });
+    }).finally(() => setLoading(false));
   };
   const articleMapList = useMemo(() => {
     const _articleList = articleList.filter(
@@ -130,135 +134,138 @@ const ArticleInfo: React.FC<Props> = (props) => {
           ))}
         </div>
       </div>
+      {/* <Walking loading={loading} /> */}
       <div className={styles.articleContent}>
-        <div className={styles.articleList}>
-          {articleMapList.map((item, index) => (
-            <div key={index} className={styles.flowWrapper}>
-              {item.map((article, i) => {
-                const images = article.imageUrls
-                  ? article.imageUrls.split('|')
-                  : [];
-                const tag = articleMapList.length * i + (index + 1);
-                return (
-                  <div
-                    key={article.articleId}
-                    className={styles.articleCard}
-                    onClick={() => {
-                      history.push({
-                        pathname: '/articlePage',
-                        query: { id: article.articleId },
-                      });
-                    }}
-                  >
-                    <div className={styles.head}>
-                      <div
-                        className={styles.tag}
-                        style={{
-                          backgroundColor: colorTags[tag % colorTags.length],
-                          color: 'white',
-                        }}
-                      >
-                        {article.articleType?.articleTypeName}
-                      </div>
-                      <span className={styles.time}>
-                        {moment(article.publishTime).format(
-                          'YYYY / MM / DD HH:mm',
-                        )}
-                      </span>
-                    </div>
-                    <div className={styles.title}>{article.title}</div>
-                    <div className={styles.desc}>{article.articleDesc}</div>
-                    <div className={styles.picList}>
-                      {images.map((img, z) => (
-                        <div key={z} className={styles.pic}>
-                          <img src={img} alt="" />
-                        </div>
-                      ))}
-                    </div>
-                    <div className={styles.favor}>
-                      <span className={styles.statistics}>
-                        <EyeOutlined className={styles.icon} />
-                        {article.readPeople || 0}
-                      </span>
-                      <span className={styles.statistics}>
-                        {article.like ? (
-                          <HeartFilled
-                            className={styles.icon}
-                            style={{ color: '#FF5A4D' }}
-                          />
-                        ) : (
-                          <HeartOutlined className={styles.icon} />
-                        )}
-                        {article.popularity || 0}
-                      </span>
-                      <span className={styles.statistics}>
-                        <MessageOutlined className={styles.icon} />
-                        {article.comments.length}
-                      </span>
-                      {isLogin ? (
+        <Spin spinning={loading}>
+          <div className={styles.articleList} style={{ minHeight: 100 }}>
+            {articleMapList.map((item, index) => (
+              <div key={index} className={styles.flowWrapper}>
+                {item.map((article, i) => {
+                  const images = article.imageUrls
+                    ? article.imageUrls.split('|')
+                    : [];
+                  const tag = articleMapList.length * i + (index + 1);
+                  return (
+                    <div
+                      key={article.articleId}
+                      className={styles.articleCard}
+                      onClick={() => {
+                        history.push({
+                          pathname: '/articlePage',
+                          query: { id: article.articleId },
+                        });
+                      }}
+                    >
+                      <div className={styles.head}>
                         <div
+                          className={styles.tag}
                           style={{
-                            marginLeft: 'auto',
-                            display: 'flex',
+                            backgroundColor: colorTags[tag % colorTags.length],
+                            color: 'white',
                           }}
                         >
-                          <Button
-                            style={{ marginRight: 8 }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              history.push({
-                                pathname: '/articlePage/add',
-                                query: { id: article.articleId },
-                              });
-                            }}
-                          >
-                            编辑
-                          </Button>
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              Modal.confirm({
-                                title: '提示',
-                                content: `是否确认删除《${article.title}》`,
-                                onOk: () => {
-                                  onDelete(article.articleId);
-                                },
-                              });
-                            }}
-                          >
-                            删除
-                          </Button>
+                          {article.articleType?.articleTypeName}
                         </div>
-                      ) : (
-                        ''
-                      )}
+                        <span className={styles.time}>
+                          {moment(article.publishTime).format(
+                            'YYYY / MM / DD HH:mm',
+                          )}
+                        </span>
+                      </div>
+                      <div className={styles.title}>{article.title}</div>
+                      <div className={styles.desc}>{article.articleDesc}</div>
+                      <div className={styles.picList}>
+                        {images.map((img, z) => (
+                          <div key={z} className={styles.pic}>
+                            <LazyImg src={img} />
+                          </div>
+                        ))}
+                      </div>
+                      <div className={styles.favor}>
+                        <span className={styles.statistics}>
+                          <EyeOutlined className={styles.icon} />
+                          {article.readPeople || 0}
+                        </span>
+                        <span className={styles.statistics}>
+                          {article.like ? (
+                            <HeartFilled
+                              className={styles.icon}
+                              style={{ color: '#FF5A4D' }}
+                            />
+                          ) : (
+                            <HeartOutlined className={styles.icon} />
+                          )}
+                          {article.popularity || 0}
+                        </span>
+                        <span className={styles.statistics}>
+                          <MessageOutlined className={styles.icon} />
+                          {article.comments.length}
+                        </span>
+                        {isLogin ? (
+                          <div
+                            style={{
+                              marginLeft: 'auto',
+                              display: 'flex',
+                            }}
+                          >
+                            <Button
+                              style={{ marginRight: 8 }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                history.push({
+                                  pathname: '/articlePage/add',
+                                  query: { id: article.articleId },
+                                });
+                              }}
+                            >
+                              编辑
+                            </Button>
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                Modal.confirm({
+                                  title: '提示',
+                                  content: `是否确认删除《${article.title}》`,
+                                  onOk: () => {
+                                    onDelete(article.articleId);
+                                  },
+                                });
+                              }}
+                            >
+                              删除
+                            </Button>
+                          </div>
+                        ) : (
+                          ''
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          ))}
-          {!curNum ? (
-            <div className={styles.empty}>
-              <img src={require('../img/empty.jpg')} alt="" />
-              <div>作者太懒了，这里空空如也</div>
+                  );
+                })}
+              </div>
+            ))}
+            {!curNum ? (
+              <div className={styles.empty}>
+                <img src={require('../img/empty.jpg')} alt="" />
+                <div>作者太懒了，这里空空如也</div>
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
+          {total && total > articleList.length ? (
+            <div className={styles.loading}>
+              <div
+                className={styles.more}
+                onClick={() => queryArticleList(page + 1)}
+              >
+                加载更多
+              </div>
             </div>
           ) : (
             ''
           )}
-        </div>
-        {total && total > articleList.length ? (
-          <div className={styles.loading}>
-            <div
-              className={styles.more}
-              onClick={() => queryArticleList(page + 1)}
-            >
-              加载更多
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
+        </Spin>
         {total && total == articleList.length ? <div className={styles.bottomTip}>到底啦～</div> : ''}
       </div>
     </div>

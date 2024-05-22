@@ -386,7 +386,7 @@ const QuestionBank: React.FC<Props> = (props) => {
                 {showcorrect ? (
                   <div>
                     <p style={{ marginTop: 30, color: '#666' }}>
-                      答案解析：{current.answerKeys}
+                      答案解析：{current.answerKeys || '(无)'}
                     </p>
                     {disabled ? (
                       <div style={{ textAlign: 'center', fontSize: 16 }}>
