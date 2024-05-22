@@ -25,7 +25,7 @@ const setToken = (obj: {
     Cookies.set(bigBUser, JSON.stringify(userInfo), { expires });
   }
   if (theme) {
-    Cookies.set(bigBtheme, theme);
+    Cookies.set(bigBtheme, theme, { expires });
   }
 };
 

@@ -25,7 +25,7 @@ import CheckSkinDrawer from './components/checkSkin';
 import HeadGuide from '@/components/HeadGuide';
 import Game from '../game';
 
-interface Props {}
+interface Props { }
 const HomePage: React.FC<Props> = (props) => {
   const { isLogin, onRefresh } = useModel('global', (model) => ({
     isLogin: model.isLogin,
@@ -91,21 +91,22 @@ const HomePage: React.FC<Props> = (props) => {
       }
     });
   };
-  const toggleTheme = (themeType: 'dark' | undefined) => {
+  const toggleTheme = (themeType: 'dark' | 'custom') => {
     if (TokenUtils.getTheme() === themeType) {
       return;
     }
-    if (themeType === undefined) {
-      TokenUtils.clearTheme();
-    } else {
-      TokenUtils.setToken({ bigBtheme: themeType });
-    }
+    TokenUtils.setToken({ bigBtheme: themeType });
     onRefresh();
     setShowPop(false);
   };
   useEffect(() => {
-    const current = new Date().getTime();
-    if (current < new Date('').getTime()) {
+    if (!TokenUtils.getTheme()) {
+      const hour = new Date().getHours();
+      if (5 < hour && hour < 16) {
+        toggleTheme('custom');
+      } else {
+        toggleTheme('dark');
+      }
     }
   }, []);
   useEffect(() => {
@@ -189,7 +190,7 @@ const HomePage: React.FC<Props> = (props) => {
               ) : (
                 <img
                   src={require('../../static/img/sun.png')}
-                  onClick={() => toggleTheme(undefined)}
+                  onClick={() => toggleTheme('custom')}
                 />
               )}
 

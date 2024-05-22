@@ -82,9 +82,6 @@ const Index: React.FC<Props> = (props) => {
   );
   const theme = TokenUtils.getTheme();
   useEffect(() => {
-    initTheme();
-  }, [])
-  useEffect(() => {
     document.body.setAttribute('class', `bigB-${theme || 'custom'}-theme`);
   }, [theme]);
   return app;

@@ -39,7 +39,7 @@ const ArticleInfo: React.FC<Props> = (props) => {
   const queryArticleList = (_page = 1, _active = active) => {
     setLoading(true);
     httpGet('/article/getListByPage', {
-      size: 5,
+      size: 6,
       page: _page,
       articleTypeId: _active === -1 ? undefined : _active,
     }).then(({ success, data: { list, total: _total } }) => {

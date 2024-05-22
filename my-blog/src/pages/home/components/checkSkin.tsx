@@ -26,10 +26,10 @@ const CheckSkinDrawer: React.FC<Props> = (props) => {
             [styles.active]: !TokenUtils.getTheme(),
           })}
           onClick={() => {
-            if (!TokenUtils.getTheme()) {
+            if (TokenUtils.getTheme() === 'custom') {
               return;
             }
-            TokenUtils.clearTheme();
+            TokenUtils.setToken({ bigBtheme: 'custom' });
             onRefresh();
             onClose();
           }}
